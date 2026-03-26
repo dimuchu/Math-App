@@ -17,9 +17,18 @@ struct OnboardingView: View {
                 case .diagnosticResults:
                     DiagnosticResultsView(viewModel: viewModel)
                 }
+            } else {
+                VStack(spacing: MMSpacing.md) {
+                    ProgressView()
+                    Text("Preparing onboarding...")
+                        .font(MMFonts.callout)
+                        .foregroundStyle(MMColors.Text.secondary)
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(MMColors.Background.primaryAdaptive)
             }
         }
-        .onAppear {
+        .task {
             if viewModel == nil {
                 viewModel = OnboardingViewModel(modelContext: modelContext)
             }

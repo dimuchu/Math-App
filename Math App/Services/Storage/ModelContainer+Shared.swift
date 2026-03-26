@@ -11,6 +11,13 @@ extension ModelContainer {
         do {
             return try ModelContainer(for: schema, configurations: [configuration])
         } catch {
+            #if DEBUG
+            let nsError = error as NSError
+            print("[SwiftData] Failed to create ModelContainer")
+            print("[SwiftData] Error: \(error)")
+            print("[SwiftData] Domain: \(nsError.domain), Code: \(nsError.code)")
+            print("[SwiftData] UserInfo: \(nsError.userInfo)")
+            #endif
             fatalError("Failed to create ModelContainer: \(error)")
         }
     }()
