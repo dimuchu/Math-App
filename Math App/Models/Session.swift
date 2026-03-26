@@ -1,6 +1,7 @@
 import Foundation
 import SwiftData
 
+@MainActor
 @Model
 final class Session {
     var startDate: Date

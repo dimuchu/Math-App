@@ -1,20 +1,21 @@
 import Foundation
 
-protocol StorageService: Sendable {
+@MainActor
+protocol StorageService {
     // MARK: - UserProfile
-    func fetchProfile() async throws -> UserProfile?
-    func saveProfile(_ profile: UserProfile) async throws
-    func getOrCreateProfile() async throws -> UserProfile
+    func fetchProfile() throws -> UserProfile?
+    func saveProfile(_ profile: UserProfile) throws
+    func getOrCreateProfile() throws -> UserProfile
 
     // MARK: - SkillLevel
-    func fetchAllSkills() async throws -> [SkillLevel]
-    func fetchSkill(for operation: MathOperation, digitRange: DifficultyRange) async throws -> SkillLevel?
-    func saveSkill(_ skill: SkillLevel) async throws
-    func saveSkills(_ skills: [SkillLevel]) async throws
-    func resetAllSkills() async throws
+    func fetchAllSkills() throws -> [SkillLevel]
+    func fetchSkill(for operation: MathOperation, digitRange: DifficultyRange) throws -> SkillLevel?
+    func saveSkill(_ skill: SkillLevel) throws
+    func saveSkills(_ skills: [SkillLevel]) throws
+    func resetAllSkills() throws
 
     // MARK: - Session
-    func saveSession(_ session: Session) async throws
-    func fetchRecentSessions(limit: Int) async throws -> [Session]
-    func fetchAllSessions() async throws -> [Session]
+    func saveSession(_ session: Session) throws
+    func fetchRecentSessions(limit: Int) throws -> [Session]
+    func fetchAllSessions() throws -> [Session]
 }

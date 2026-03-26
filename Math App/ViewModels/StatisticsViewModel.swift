@@ -22,22 +22,22 @@ final class StatisticsViewModel {
     }
 
     init(modelContext: ModelContext) {
-        self.storageService = SwiftDataStorageService(modelContainer: modelContext.container)
+        self.storageService = SwiftDataStorageService(modelContext: modelContext)
     }
 
     func load() async {
         do {
-            let profile = try await storageService.getOrCreateProfile()
+            let profile = try storageService.getOrCreateProfile()
             totalSolved = profile.totalProblemsSolved
             streakCount = profile.streakCount
 
-            recentSessions = try await storageService.fetchRecentSessions(limit: 20)
+            recentSessions = try storageService.fetchRecentSessions(limit: 20)
 
             let totalCorrect = recentSessions.reduce(0) { $0 + $1.correctCount }
             let totalProblems = recentSessions.reduce(0) { $0 + $1.totalProblems }
             overallAccuracy = totalProblems > 0 ? Double(totalCorrect) / Double(totalProblems) : 0
 
-            skillLevels = try await storageService.fetchAllSkills()
+            skillLevels = try storageService.fetchAllSkills()
         } catch {
             // Continue with empty data
         }

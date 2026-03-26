@@ -31,7 +31,7 @@ final class SettingsViewModel {
     var showRetakeDiagnostic = false
 
     init(modelContext: ModelContext) {
-        self.storageService = SwiftDataStorageService(modelContainer: modelContext.container)
+        self.storageService = SwiftDataStorageService(modelContext: modelContext)
     }
 
     func toggleOperation(_ operation: MathOperation) {
@@ -52,8 +52,8 @@ final class SettingsViewModel {
 
     func resetProgress() async {
         do {
-            try await storageService.resetAllSkills()
-            let profile = try await storageService.getOrCreateProfile()
+            try storageService.resetAllSkills()
+            let profile = try storageService.getOrCreateProfile()
             profile.streakCount = 0
             profile.totalSessions = 0
             profile.totalProblemsSolved = 0
@@ -67,8 +67,8 @@ final class SettingsViewModel {
 
     func retakeDiagnostic() async {
         do {
-            try await storageService.resetAllSkills()
-            let profile = try await storageService.getOrCreateProfile()
+            try storageService.resetAllSkills()
+            let profile = try storageService.getOrCreateProfile()
             profile.diagnosticCompleted = false
         } catch {
             // Silently handle

@@ -66,7 +66,7 @@ final class TrainingViewModel {
 
     init(mode: TrainingMode, modelContext: ModelContext) {
         self.mode = mode
-        self.storageService = SwiftDataStorageService(modelContainer: modelContext.container)
+        self.storageService = SwiftDataStorageService(modelContext: modelContext)
     }
 
     func start() async {
@@ -123,7 +123,7 @@ final class TrainingViewModel {
         }
 
         let delay = isCorrect ? MMAnimation.correctFeedbackDuration : MMAnimation.errorFeedbackDuration
-        Task {
+        Task { @MainActor in
             try? await Task.sleep(for: .seconds(delay))
             afterFeedback()
         }
@@ -186,7 +186,7 @@ final class TrainingViewModel {
             previousBestCount: previousBestCount
         )
 
-        Task {
+        Task { @MainActor in
             await saveSession()
         }
     }
@@ -235,8 +235,8 @@ final class TrainingViewModel {
 
     private func loadSkillsAndRecords() async {
         do {
-            skillLevels = try await storageService.fetchAllSkills()
-            let profile = try await storageService.getOrCreateProfile()
+            skillLevels = try storageService.fetchAllSkills()
+            let profile = try storageService.getOrCreateProfile()
             previousBestAccuracy = profile.bestPracticeAccuracy
             previousBestCount = profile.bestTimeAttackCount
         } catch {
@@ -249,23 +249,23 @@ final class TrainingViewModel {
 
         do {
             let session = Session(mode: mode, attempts: attempts)
-            try await storageService.saveSession(session)
+            try storageService.saveSession(session)
 
             // Update skill ratings
             let updates = adaptiveEngine.processAttempts(attempts, currentSkills: skillLevels)
             for update in updates {
-                if let existing = try await storageService.fetchSkill(for: update.operation, digitRange: update.digitRange) {
+                if let existing = try storageService.fetchSkill(for: update.operation, digitRange: update.digitRange) {
                     existing.rating = update.newRating
                     existing.lastPracticed = .now
                 } else {
                     let skill = SkillLevel(operation: update.operation, digitRange: update.digitRange, rating: update.newRating)
                     skill.lastPracticed = .now
-                    try await storageService.saveSkill(skill)
+                    try storageService.saveSkill(skill)
                 }
             }
 
             // Update profile
-            let profile = try await storageService.getOrCreateProfile()
+            let profile = try storageService.getOrCreateProfile()
             profile.totalSessions += 1
             profile.totalProblemsSolved += attempts.count
 

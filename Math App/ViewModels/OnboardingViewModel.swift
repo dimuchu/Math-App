@@ -62,7 +62,7 @@ final class OnboardingViewModel {
     }
 
     init(modelContext: ModelContext) {
-        self.storageService = SwiftDataStorageService(modelContainer: modelContext.container)
+        self.storageService = SwiftDataStorageService(modelContext: modelContext)
     }
 
     func startDiagnostic() {
@@ -74,7 +74,7 @@ final class OnboardingViewModel {
     }
 
     func skip() {
-        Task { await skipDiagnostic() }
+        Task { @MainActor in await skipDiagnostic() }
     }
 
     func complete() {
@@ -120,7 +120,7 @@ final class OnboardingViewModel {
         }
 
         let delay = isCorrect ? MMAnimation.correctFeedbackDuration : MMAnimation.errorFeedbackDuration
-        Task {
+        Task { @MainActor in
             try? await Task.sleep(for: .seconds(delay))
             afterFeedback()
         }
@@ -150,7 +150,7 @@ final class OnboardingViewModel {
         diagnosticResults = diagnosticEngine.analyzeResults(attempts: diagnosticAttempts)
         step = .diagnosticResults
 
-        Task { await saveDiagnosticResults() }
+        Task { @MainActor in await saveDiagnosticResults() }
     }
 
     private func saveDiagnosticResults() async {
@@ -158,9 +158,9 @@ final class OnboardingViewModel {
             for rating in diagnosticResults {
                 let skill = SkillLevel(operation: rating.operation, digitRange: rating.digitRange, rating: rating.rating)
                 skill.lastPracticed = .now
-                try await storageService.saveSkill(skill)
+                try storageService.saveSkill(skill)
             }
-            let profile = try await storageService.getOrCreateProfile()
+            let profile = try storageService.getOrCreateProfile()
             profile.diagnosticCompleted = true
         } catch {
             // Continue without saving
@@ -173,10 +173,10 @@ final class OnboardingViewModel {
             for operation in MathOperation.allCases {
                 for range in DifficultyRange.allCases {
                     let skill = SkillLevel(operation: operation, digitRange: range, rating: 0.5)
-                    try await storageService.saveSkill(skill)
+                    try storageService.saveSkill(skill)
                 }
             }
-            let profile = try await storageService.getOrCreateProfile()
+            let profile = try storageService.getOrCreateProfile()
             profile.diagnosticCompleted = true
         } catch {
             // Continue

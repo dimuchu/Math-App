@@ -1,8 +1,13 @@
 import Foundation
 import SwiftData
 
-@ModelActor
-actor SwiftDataStorageService: StorageService {
+@MainActor
+final class SwiftDataStorageService: StorageService {
+    private let modelContext: ModelContext
+
+    init(modelContext: ModelContext) {
+        self.modelContext = modelContext
+    }
 
     // MARK: - UserProfile
 
