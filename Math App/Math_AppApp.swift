@@ -6,12 +6,29 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct Math_AppApp: App {
+    private let settings = AppSettings.shared
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            RootView()
+                .preferredColorScheme(settings.colorScheme)
+        }
+        .modelContainer(ModelContainer.shared)
+    }
+}
+
+struct RootView: View {
+    @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = false
+
+    var body: some View {
+        if hasCompletedOnboarding {
+            MainTabView()
+        } else {
+            OnboardingView()
         }
     }
 }
