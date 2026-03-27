@@ -17,6 +17,9 @@ final class AppSettings {
     @AppStorage("appearance") private var appearanceRaw: String = AppAppearance.system.rawValue
 
     @ObservationIgnored
+    @AppStorage("hasUserSelectedAppearance") private var hasUserSelectedAppearance: Bool = false
+
+    @ObservationIgnored
     @AppStorage("hasCompletedOnboarding") var hasCompletedOnboarding: Bool = false
 
     @ObservationIgnored
@@ -41,8 +44,14 @@ final class AppSettings {
     }
 
     var appearance: AppAppearance {
-        get { AppAppearance(rawValue: appearanceRaw) ?? .system }
-        set { appearanceRaw = newValue.rawValue }
+        get {
+            guard hasUserSelectedAppearance else { return .system }
+            return AppAppearance(rawValue: appearanceRaw) ?? .system
+        }
+        set {
+            appearanceRaw = newValue.rawValue
+            hasUserSelectedAppearance = true
+        }
     }
 
     var colorScheme: ColorScheme? {

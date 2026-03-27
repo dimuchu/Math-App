@@ -10,12 +10,18 @@ import SwiftData
 
 @main
 struct Math_AppApp: App {
-    private let settings = AppSettings.shared
+    @AppStorage("appearance") private var appearanceRaw: String = AppAppearance.system.rawValue
+    @AppStorage("hasUserSelectedAppearance") private var hasUserSelectedAppearance = false
+
+    private var preferredAppColorScheme: ColorScheme? {
+        guard hasUserSelectedAppearance else { return nil }
+        return (AppAppearance(rawValue: appearanceRaw) ?? .system).colorScheme
+    }
 
     var body: some Scene {
         WindowGroup {
             RootView()
-                .preferredColorScheme(settings.colorScheme)
+                .preferredColorScheme(preferredAppColorScheme)
         }
         .modelContainer(ModelContainer.shared)
     }

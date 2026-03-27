@@ -47,7 +47,8 @@ private struct SettingsFormView: View {
             Section("Appearance") {
                 Picker("Theme", selection: $viewModel.appearance) {
                     ForEach(AppAppearance.allCases) { appearance in
-                        Text(appearance.displayName).tag(appearance)
+                        Text(appearance == .system ? "System (Default)" : appearance.displayName)
+                            .tag(appearance)
                     }
                 }
             }
