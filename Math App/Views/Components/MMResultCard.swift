@@ -86,7 +86,6 @@ struct MMResultCard: View {
         .padding(MMSpacing.xl)
         .onAppear {
             if isNewRecord {
-                HapticService.shared.newRecord()
                 withAnimation(MMAnimation.newRecord.delay(0.3)) {
                     showRecord = true
                 }

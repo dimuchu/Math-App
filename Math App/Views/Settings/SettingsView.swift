@@ -53,10 +53,6 @@ private struct SettingsFormView: View {
                 }
             }
 
-            Section("Feedback") {
-                Toggle("Haptics", isOn: $viewModel.hapticsEnabled)
-            }
-
             Section("Progress") {
                 Button("Retake Diagnostic") {
                     viewModel.showRetakeDiagnostic = true

@@ -11,9 +11,6 @@ final class AppSettings {
     @AppStorage("difficulty") private var difficultyRaw: String = DifficultyRange.singleDigit.rawValue
 
     @ObservationIgnored
-    @AppStorage("hapticsEnabled") var hapticsEnabled: Bool = true
-
-    @ObservationIgnored
     @AppStorage("appearance") private var appearanceRaw: String = AppAppearance.system.rawValue
 
     @ObservationIgnored

@@ -382,8 +382,7 @@ MentalMath/
 ├── Services/
 │   ├── Storage/            # Абстракция хранения (протокол + реализация)
 │   ├── IAP/                # In-app purchases (StoreKit 2)
-│   ├── Notifications/      # Push-уведомления
-│   └── HapticService/      # Вибро-обратная связь
+│   └── Notifications/      # Push-уведомления
 └── Resources/              # Assets, локализация
 ```
 

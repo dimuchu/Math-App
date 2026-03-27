@@ -99,7 +99,6 @@ xcodebuild -project "Math App.xcodeproj" -scheme "Math App" -configuration Debug
 - [ ] Delete удаляет последнюю цифру
 - [ ] Минус переключает знак (для вычитания с отрицательным ответом)
 - [ ] Ограничение: макс 7 цифр, без ведущих нулей
-- [ ] Хаптики при нажатии (если включены)
 
 ### 6. Статистика
 
@@ -113,7 +112,6 @@ xcodebuild -project "Math App.xcodeproj" -scheme "Math App" -configuration Debug
 - [ ] Включение/выключение операций (минимум 1 всегда включена)
 - [ ] Выбор сложности (Easy / Medium / Hard)
 - [ ] Тема (System / Light / Dark) — применяется сразу
-- [ ] Haptics toggle
 - [ ] **Retake Diagnostic** → сброс скиллов + повторный онбординг
 - [ ] **Reset All Progress** → confirmation dialog → полный сброс
 

@@ -116,12 +116,6 @@ final class TrainingViewModel {
         let isCorrect = attempt.isCorrect
         state = .feedback(isCorrect: isCorrect)
 
-        if isCorrect {
-            HapticService.shared.correctAnswer()
-        } else {
-            HapticService.shared.wrongAnswer()
-        }
-
         let delay = isCorrect ? MMAnimation.correctFeedbackDuration : MMAnimation.errorFeedbackDuration
         Task { @MainActor in
             try? await Task.sleep(for: .seconds(delay))
@@ -225,9 +219,6 @@ final class TrainingViewModel {
             return
         }
         remainingSeconds -= 1
-        if remainingSeconds <= 10 && remainingSeconds > 0 {
-            HapticService.shared.timerWarning()
-        }
         if remainingSeconds <= 0 {
             finishSession()
         }

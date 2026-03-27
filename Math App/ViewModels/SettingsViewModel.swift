@@ -22,11 +22,6 @@ final class SettingsViewModel {
         set { settings.appearance = newValue }
     }
 
-    var hapticsEnabled: Bool {
-        get { settings.hapticsEnabled }
-        set { settings.hapticsEnabled = newValue }
-    }
-
     var showResetConfirmation = false
     var showRetakeDiagnostic = false
 

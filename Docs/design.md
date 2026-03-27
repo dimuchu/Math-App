@@ -361,10 +361,6 @@
 │  APPEARANCE                  │
 │  Theme          System    >  │  ← Picker (Light/Dark/System)
 │                              │
-│  FEEDBACK                    │
-│  Sound          [toggle]     │
-│  Haptics        [toggle]     │
-│                              │
 │  ABOUT                       │
 │  Version        1.0.0        │
 │  Rate App                 >  │
@@ -373,7 +369,7 @@
 ```
 
 - Стиль: `Form` с `InsetGroupedListStyle`
-- Секции: Training, Appearance, Feedback, About
+- Секции: Training, Appearance, About
 - Нативные контролы SwiftUI
 
 ### Onboarding
@@ -429,21 +425,3 @@
 - Анимация ошибки (1.0s) — единственная, которая задерживает переход
 
 ---
-
-## 8. Хаптики
-
-Реализация через `UIImpactFeedbackGenerator`, `UINotificationFeedbackGenerator`.
-
-| Событие | Тип хаптика | UIKit API |
-|---------|-------------|-----------|
-| Нажатие кнопки нампада | Light impact | `UIImpactFeedbackGenerator(style: .light)` |
-| Правильный ответ | Success notification | `UINotificationFeedbackGenerator().success` |
-| Неправильный ответ | Error notification | `UINotificationFeedbackGenerator().error` |
-| Новый рекорд | Heavy impact + Success | `UIImpactFeedbackGenerator(style: .heavy)` → `UINotificationFeedbackGenerator().success` |
-| Таймер < 10s (каждую секунду) | Soft impact | `UIImpactFeedbackGenerator(style: .soft)` |
-| Delete (⌫) | Rigid impact | `UIImpactFeedbackGenerator(style: .rigid)` |
-
-**Принципы:**
-- Хаптики управляются через `HapticService` (централизованно)
-- Пользователь может отключить хаптики в настройках
-- На macOS и visionOS хаптики отключены (проверка через `#if os(iOS)`)

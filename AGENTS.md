@@ -61,8 +61,7 @@ Math App/
 ├── Services/
 │   ├── Storage/            # StorageService protocol + SwiftData implementation
 │   ├── IAP/                # StoreKit 2 (Post-MVP)
-│   ├── Notifications/      # Push notifications (Post-MVP)
-│   └── HapticService/      # UIImpactFeedbackGenerator, UINotificationFeedbackGenerator
+│   └── Notifications/      # Push notifications (Post-MVP)
 └── Resources/              # Assets, String Catalogs
 ```
 

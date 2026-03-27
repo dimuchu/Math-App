@@ -113,12 +113,6 @@ final class OnboardingViewModel {
         let isCorrect = attempt.isCorrect
         diagnosticState = .feedback(isCorrect: isCorrect)
 
-        if isCorrect {
-            HapticService.shared.correctAnswer()
-        } else {
-            HapticService.shared.wrongAnswer()
-        }
-
         let delay = isCorrect ? MMAnimation.correctFeedbackDuration : MMAnimation.errorFeedbackDuration
         Task { @MainActor in
             try? await Task.sleep(for: .seconds(delay))

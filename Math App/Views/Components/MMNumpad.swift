@@ -19,7 +19,6 @@ struct MMNumpad: View {
                     color: MMColors.Numpad.delete,
                     textColor: .white
                 ) {
-                    HapticService.shared.deleteTap()
                     onDelete()
                 }
                 .accessibilityLabel("Delete")
@@ -35,7 +34,6 @@ struct MMNumpad: View {
                     color: MMColors.Numpad.background,
                     textColor: MMColors.Text.primary
                 ) {
-                    HapticService.shared.numpadTap()
                     onToggleMinus()
                 }
                 .accessibilityLabel("Toggle negative")
@@ -52,7 +50,6 @@ struct MMNumpad: View {
                     textColor: .white
                 ) {
                     guard isSubmitEnabled else { return }
-                    HapticService.shared.numpadTap()
                     onSubmit()
                 }
                 .accessibilityLabel("Submit answer")
@@ -74,7 +71,6 @@ struct MMNumpad: View {
             color: MMColors.Numpad.background,
             textColor: MMColors.Text.primary
         ) {
-            HapticService.shared.numpadTap()
             onDigit(digit)
         } label: {
             Text("\(digit)")
