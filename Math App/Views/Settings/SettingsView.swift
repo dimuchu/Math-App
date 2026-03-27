@@ -77,6 +77,9 @@ private struct SettingsFormView: View {
                 }
             }
         }
+        // Keep the last form rows scrollable above the floating tab bar.
+        .contentMargins(.bottom, 120, for: .scrollContent)
+        .safeAreaPadding(.bottom, 8)
         .confirmationDialog("Reset All Progress?", isPresented: $viewModel.showResetConfirmation, titleVisibility: .visible) {
             Button("Reset", role: .destructive) {
                 Task { await viewModel.resetProgress() }
